@@ -10,7 +10,15 @@ typedef struct queue_t{
 }queue_t;
 
 int push(queue_t *q, int value){
-    if(q->qty == QUEUE_SIZE)return INT_MIN;
+    if(q->qty == QUEUE_SIZE){
+    // tratamento circular
+
+        // left shift
+        for(int i = 0; i < q->qty; ++i)
+            q->queue[i] = q->queue[i + 1];
+
+        q->qty--;
+    }
 
     q->queue[q->qty++] = value;
 
