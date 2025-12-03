@@ -39,7 +39,7 @@ int getsize(tree_t *tree){
     return tree ? tree->size : -1;
 }
 
-// O(log n)
+// O(logn)
 int branch(tree_t *tree, int value){
     if(!tree)return -1;
 
@@ -52,7 +52,10 @@ int branch(tree_t *tree, int value){
     }else{
         node_t *node = tree->root;
 
-        // busca binária
+        // critério de inserção: busca binária
+        // nota: ao inserir desta forma, os valores menores vão para a subárvore da esquerda
+        //       e os valores maiores vão para a subárvore da direita. Portanto, caracteriza
+        //       uma Árvore Binária de Busca (BST)
         while(1){
             if(node->value >= value){
             // vai para a esquerda
@@ -87,6 +90,7 @@ int branch(tree_t *tree, int value){
     return 0;
 }
 
+// O(logn)
 int disbranch(tree_t *tree, int value){
     if(!tree)return -1;
 
