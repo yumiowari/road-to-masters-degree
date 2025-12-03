@@ -3,7 +3,7 @@
 #include "tree.h"
 
 int main(){
-    int value, res, size;
+    int value, res, size, type;
     tree_t *tree = NULL;
 
     while(1){
@@ -11,6 +11,8 @@ int main(){
         printf("2. Inserir elemento na árvore\n");
         printf("3. Consultar o tamanho da árvore\n");
         printf("4. Remover o elemento da árvore\n");
+        printf("5. Percorrer a árvore\n");
+        printf("6. Desalocar a memória da árvore\n");
         printf("\n0. Sair\n");
         printf("Escolha: ");
 
@@ -55,13 +57,35 @@ int main(){
                 printf("Insira o valor a ser removido: ");
                 scanf("%d", &value);
 
-                res = cut(tree, value);
+                res = disbranch(tree, value);
 
                 switch(res){
                     case 0: printf("Elemento removido.\n"); break;
                     case 1: printf("Valor não encontrado.\n"); break;
                     case -1: printf("A árvore ainda não foi alocada.\n"); break;
                 }
+
+                break;
+
+            case 5:
+                printf(
+                    "Informe o tipo da impressão:\n"
+                    "(0 - em ordem; 1 - pré-ordem; 2 - pós-ordem)\n"
+                );
+
+                scanf("%d", &type);
+
+                if(showtree(tree, type) == -1){
+                    printf("A árvore ainda não foi iniciada.\n");
+                }
+
+                break;
+
+            case 6:
+                if(cutdown(tree) == -1)
+                    printf("A árvore ainda não foi iniciada.\n");
+                else
+                    printf("Memória desalocada com sucesso.\n");
 
                 break;
 

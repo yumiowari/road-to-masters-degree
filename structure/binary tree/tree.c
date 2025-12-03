@@ -87,7 +87,7 @@ int branch(tree_t *tree, int value){
     return 0;
 }
 
-int cut(tree_t *tree, int value){
+int disbranch(tree_t *tree, int value){
     if(!tree)return -1;
 
     node_t *node = tree->root;
@@ -170,4 +170,68 @@ int cut(tree_t *tree, int value){
             }
         }
     }
+}
+
+void prune(node_t *node){
+    if(!node)return;
+
+    prune(node->left);
+    prune(node->right);
+
+    free(node);
+}
+
+int cutdown(tree_t *tree){
+    if(!tree)return -1;
+
+    prune(tree->root);
+
+    free(tree);
+
+    tree = NULL;
+
+    return 0;
+}
+
+void inorder(node_t *node){
+    if(!node)return;
+
+    inorder(node->left);        // nó filho da esquerda
+    printf("%d ", node->value); // nó atual
+    inorder(node->right);       // nó filho da direita
+}
+
+void preorder(node_t *node){
+    if(!node)return;
+
+    printf("%d ", node->value); // nó atual
+    preorder(node->left);       // nó filho da esquerda
+    preorder(node->right);      // nó filho da direita
+}
+
+void postorder(node_t *node){
+    if(!node)return;
+
+    postorder(node->left);      // nó filho da esquerda
+    postorder(node->right);     // nó filho da direita
+    printf("%d ", node->value); // nó atual
+}
+
+int showtree(tree_t *tree, int type){
+    if(!tree)return -1;
+
+    printf("É a árvore:\n");
+    switch(type){
+        case 0: inorder(tree->root); break;
+        case 1: preorder(tree->root); break;
+        case 2: postorder(tree->root); break;
+
+        default:
+            printf("Tipo inválido.\n");
+
+            return 1;
+    }
+    printf("\n");
+
+    return 0;
 }
