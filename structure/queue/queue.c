@@ -10,11 +10,8 @@ typedef struct queue_t{
 }queue_t;
 
 int push(queue_t *q, int value){
-    if(q->qty == QUEUE_SIZE){
-    // tratamento circular
-
-        // left shift
-        for(int i = 0; i < q->qty; ++i)
+    if(q->qty == QUEUE_SIZE){ // tratamento circular
+        for(int i = 0; i < q->qty; ++i) // left shift
             q->queue[i] = q->queue[i + 1];
 
         q->qty--;
@@ -30,8 +27,7 @@ int pop(queue_t *q){
 
     int value = q->queue[0];
 
-    // left shift
-    for(int i = 0; i < q->qty; ++i)
+    for(int i = 0; i < q->qty; ++i) // left shift
         q->queue[i] = q->queue[i + 1];
 
     q->qty--;

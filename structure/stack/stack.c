@@ -9,11 +9,11 @@ typedef struct stack_t{
     int qty;
 }stack_t;
 
+// O(n)
 int push(stack_t *s, int value){
     if(s->qty == STACK_SIZE)return INT_MIN;
 
-    // right shift
-    for(int i = s->qty; i > 0; --i)
+    for(int i = s->qty; i > 0; --i) // right shift
         s->stack[i] = s->stack[i - 1];
 
     s->stack[0] = value;
@@ -23,13 +23,13 @@ int push(stack_t *s, int value){
     return INT_MAX;
 }
 
+// O(n)
 int pop(stack_t *s){
     if(s->qty == 0)return INT_MIN;
 
     int value = s->stack[0];
 
-    // left shift
-    for(int i = 0; i < s->qty; ++i)
+    for(int i = 0; i < s->qty; ++i) // left shift
         s->stack[i] = s->stack[i + 1];
 
     s->qty--;
@@ -37,6 +37,7 @@ int pop(stack_t *s){
     return value;
 }
 
+// O(1)3
 bool isempty(stack_t s){
     return s.qty > 0 ? false : true;
 }
