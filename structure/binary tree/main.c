@@ -3,12 +3,14 @@
 #include "tree.h"
 
 int main(){
+    int value, res, size;
     tree_t *tree = NULL;
 
     while(1){
         printf("1. Alocar memória para a árvore\n");
         printf("2. Inserir elemento na árvore\n");
         printf("3. Consultar o tamanho da árvore\n");
+        printf("4. Remover o elemento da árvore\n");
         printf("\n0. Sair\n");
         printf("Escolha: ");
 
@@ -26,10 +28,10 @@ int main(){
                 break;
 
             case 2:
-                printf("Insira o valor: ");
-                int value; scanf("%d", &value);
+                printf("Insira o valor a ser inserido: ");
+                scanf("%d", &value);
 
-                int res = branch(tree, value);
+                res = branch(tree, value);
 
                 switch(res){
                     case 0: printf("Elemento inserido.\n"); break;
@@ -40,12 +42,26 @@ int main(){
                 break;
 
             case 3:
-                int size = getsize(tree);
+                size = getsize(tree);
 
                 if(size >= 0)
                     printf("A árvore possui %d elementos.\n", size);
                 else
                     printf("A árvore ainda não foi iniciada.\n");
+
+                break;
+
+            case 4:
+                printf("Insira o valor a ser removido: ");
+                scanf("%d", &value);
+
+                res = cut(tree, value);
+
+                switch(res){
+                    case 0: printf("Elemento removido.\n"); break;
+                    case 1: printf("Valor não encontrado.\n"); break;
+                    case -1: printf("A árvore ainda não foi alocada.\n"); break;
+                }
 
                 break;
 

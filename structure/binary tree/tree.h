@@ -24,4 +24,12 @@ int branch(tree_t *tree, int value);
 // 1 - memória insuficiente
 // -1 - árvore não iniciada
 
+int cut(tree_t *tree, int value);
+// função para remover um elemento da árvore binária
+//
+// retorna...
+// 0 - sucesso
+// 1 - valor não encontrado
+// -1 - árvore não iniciada
+
 #endif // TREE_H

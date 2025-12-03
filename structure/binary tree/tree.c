@@ -50,31 +50,31 @@ int branch(tree_t *tree, int value){
 
         if(!tree->root)return 1;
     }else{
-        node_t *aux = tree->root;
+        node_t *node = tree->root;
 
         // busca binária
         while(1){
-            if(aux->value >= value){
+            if(node->value >= value){
             // vai para a esquerda
 
-                if(aux->left){
-                    aux = aux->left;
+                if(node->left){
+                    node = node->left;
                 }else{
-                    aux->left = grow(value);
+                    node->left = grow(value);
 
-                    if(!aux->left)
+                    if(!node->left)
                         return 1;
                     else break;
                 }
             }else{
             // vai para a direita
 
-                if(aux->right){
-                    aux = aux->right;
+                if(node->right){
+                    node = node->right;
                 }else{
-                    aux->right = grow(value);
+                    node->right = grow(value);
 
-                    if(!aux->right)
+                    if(!node->right)
                         return 1;
                     else break;
                 }
@@ -85,4 +85,89 @@ int branch(tree_t *tree, int value){
     tree->size++;
 
     return 0;
+}
+
+int cut(tree_t *tree, int value){
+    if(!tree)return -1;
+
+    node_t *node = tree->root;
+    node_t *prev = NULL;
+
+    // busca binária para o nó a ser removido
+    while(1){
+        if(!node)return 1;
+        // ^ o valor não existe na árvore.
+
+        else if(node->value > value)prev = node, node = node->left ? node->left : NULL;
+        // ^ vai para a esquerda
+
+        else if(node->value < value)prev = node, node = node->right ? node->right : NULL;
+        // ^ vai para a direita
+
+        else if(node->value == value){
+        // ^ encontrou o nó a ser removido
+
+            // caso 1: nó folha
+            if(!node->left && !node->right){
+                if(!prev){
+                    tree->root = NULL; // removendo a raiz
+                }else if(prev->left == node){
+                    prev->left = NULL;
+                }else{
+                    prev->right = NULL;
+                }
+
+                free(node);
+                tree->size--;
+
+                return 0;
+            }
+
+            // caso 2: nó com 1 filho
+            if((!node->left && node->right) || (node->left && !node->right)){
+                node_t *child = node->left ? node->left : node->right;
+
+                if(!prev){
+                    tree->root = NULL; // ...
+                }else if(prev->left == node){
+                    prev->left = child;
+                }else if(prev->right == node){
+                    prev->right = child;
+                }
+
+                free(node);
+                tree->size--;
+
+                return 0;
+            }
+
+            // caso 3: nó com 2 filhos
+            if(node->left && node->right){
+                // encontra o sucessor (menor nó da subárvore da direita)
+                node_t *succ_parent = node;
+                node_t *succ = node->right;
+
+                while(succ->left){
+                    succ_parent = succ;
+                    succ = succ->left;
+                }
+
+                node->value = succ->value;
+                // nota: não precisa verificar se o nó a ser removido é o nó raiz
+                //       uma vez que o nó não é removido diretamente, mas somente
+                //       substituído pelo sucessor na subárvore na direita.
+
+                // remove o nó sucessor da árvore
+                if(succ_parent->left == succ)
+                    succ_parent->left = succ->right;
+                else
+                    succ_parent->right = succ->right;
+
+                free(succ);
+                tree->size--;
+
+                return 0;
+            }
+        }
+    }
 }
