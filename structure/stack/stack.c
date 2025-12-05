@@ -20,12 +20,12 @@ int push(stack_t *s, int v){
 
 // O(1)
 int pop(stack_t *s){
-    return s->top == -1 ? INT_MIN : s->stack[s->top--];
+    return s->top + 1 == 0 ? INT_MIN : s->stack[s->top--];
 }
 
 // O(1)
 bool isempty(stack_t s){
-    return s.top >= 0 ? false : true;
+    return s.top + 1 == 0;
 }
 
 void printstack(stack_t s){
