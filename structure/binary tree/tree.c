@@ -1,5 +1,6 @@
 #include <stdlib.h> // malloc(), free()
 #include <stdio.h> // printf(), scanf()
+#include <limits.h> // INT_MIN, INT_MAX
 
 #include "tree.h"
 
@@ -238,4 +239,21 @@ int showtree(tree_t *tree, int type){
     printf("\n");
 
     return 0;
+}
+
+int find(tree_t *tree, int value){
+    if(!tree)return -1;
+
+    node_t *node = tree->root;
+
+    while(node){
+        if(value > node->value)
+            node = node->right;
+        else if(value < node->value)
+            node = node->left;
+        else // value == node->value
+            return 0;
+    }
+
+    return 1;
 }

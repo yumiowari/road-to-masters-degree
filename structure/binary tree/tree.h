@@ -1,6 +1,8 @@
 #ifndef TREE_H
 #define TREE_H
 
+#include <stdbool.h> // true, false
+
 typedef struct node node_t;
 typedef struct tree tree_t;
 
@@ -50,6 +52,14 @@ int showtree(tree_t *tree, int type);
 // retorna...
 // 0 - sucesso
 // 1 - tipo inválido
+// -1 - árvore não iniciada
+
+int find(tree_t *tree, int value);
+// função para buscar um elemento na árvore binária
+//
+// retorna...
+// 0 - elemento encontrado
+// 1 - elemento não encontrado
 // -1 - árvore não iniciada
 
 #endif // TREE_H

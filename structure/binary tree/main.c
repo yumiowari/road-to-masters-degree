@@ -13,6 +13,7 @@ int main(){
         printf("4. Remover o elemento da árvore\n");
         printf("5. Percorrer a árvore\n");
         printf("6. Desalocar a memória da árvore\n");
+        printf("7. Buscar elemento na árvore\n");
         printf("\n0. Sair\n");
         printf("Escolha: ");
 
@@ -38,7 +39,7 @@ int main(){
                 switch(res){
                     case 0: printf("Elemento inserido.\n"); break;
                     case 1: printf("Memória insuficiente.\n"); break;
-                    case -1: printf("A árvore ainda não foi alocada.\n"); break;
+                    case -1: printf("A árvore ainda não foi iniciada.\n"); break;
                 }
 
                 break;
@@ -62,7 +63,7 @@ int main(){
                 switch(res){
                     case 0: printf("Elemento removido.\n"); break;
                     case 1: printf("Valor não encontrado.\n"); break;
-                    case -1: printf("A árvore ainda não foi alocada.\n"); break;
+                    case -1: printf("A árvore ainda não foi iniciada.\n"); break;
                 }
 
                 break;
@@ -86,6 +87,21 @@ int main(){
                     printf("A árvore ainda não foi iniciada.\n");
                 else
                     printf("Memória desalocada com sucesso.\n");
+
+                break;
+
+            case 7:
+                printf("Insira o valor a ser buscado: ");
+
+                scanf("%d", &value);
+
+                res = find(tree, value);
+
+                switch(res){
+                    case 0: printf("O elemento %d existe na árvore.\n", value); break;
+                    case 1: printf("O elemento não foi encontrado.\n"); break;
+                    case -1: printf("A árvore ainda não foi iniciada.\n"); break;
+                }
 
                 break;
 

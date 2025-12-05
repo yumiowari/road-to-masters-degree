@@ -12,7 +12,7 @@ Implementação de uma estrutura de dados de Árvore Dinâmica (baseada em hiera
 
 - __disbranch()__ remove um elemento da árvore;
 
-- __cutdown()__ libera a memória da árvore; e
+- __cutdown()__ libera a memória da árvore;
 
 - __showtree()__ percorre a árvore:
 
@@ -21,3 +21,5 @@ Implementação de uma estrutura de dados de Árvore Dinâmica (baseada em hiera
     - __preorder()__ pré-ordem; e
 
     - __postorder()__ pós-ordem.
+
+- __find()__ busca o elemento na árvore.
