@@ -2,62 +2,48 @@
 #include <limits.h> // INT_MIN
 #include <stdbool.h> // true, false
 
-#define STACK_SIZE 100
+#define STACK_S 10
 
 typedef struct stack_t{
-    int stack[STACK_SIZE];
-    int qty;
+    int stack[STACK_S];
+    int top;
 }stack_t;
 
-// O(n)
-int push(stack_t *s, int value){
-    if(s->qty == STACK_SIZE)return INT_MIN;
+// O(1)
+int push(stack_t *s, int v){
+    if(s->top + 1 == STACK_S)return INT_MIN;
 
-    for(int i = s->qty; i > 0; --i) // right shift
-        s->stack[i] = s->stack[i - 1];
-
-    s->stack[0] = value;
-
-    s->qty++;
+    s->stack[++s->top] = v;
 
     return INT_MAX;
 }
 
-// O(n)
+// O(1)
 int pop(stack_t *s){
-    if(s->qty == 0)return INT_MIN;
-
-    int value = s->stack[0];
-
-    for(int i = 0; i < s->qty; ++i) // left shift
-        s->stack[i] = s->stack[i + 1];
-
-    s->qty--;
-
-    return value;
+    return s->top == -1 ? INT_MIN : s->stack[s->top--];
 }
 
-// O(1)3
+// O(1)
 bool isempty(stack_t s){
-    return s.qty > 0 ? false : true;
+    return s.top >= 0 ? false : true;
 }
 
 void printstack(stack_t s){
-    if(s.qty == 0){
+    if(s.top == 1){
         printf("A pilha está vazia.\n");
 
         return;
     }
 
     printf("É a pilha: ");
-    for(int i = 0; i < s.qty; ++i)
+    for(int i = 0; i <= s.top; ++i)
         printf("%d ", s.stack[i]);
     printf("\n");
 }
 
 int main(){
     stack_t stack;
-    stack.qty = 0;
+    stack.top = -1;
     int op;
     int value;
 
