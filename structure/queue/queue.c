@@ -2,59 +2,62 @@
 #include <limits.h> // INT_MIN
 #include <stdbool.h> // true, false
 
-#define QUEUE_SIZE 100
+#define QUEUE_S 100
 
 typedef struct queue_t{
-    int queue[QUEUE_SIZE];
-    int qty;
+    int queue[QUEUE_S];
+    int front;
+    int rear;
 }queue_t;
 
-int push(queue_t *q, int value){
-    if(q->qty == QUEUE_SIZE){ // tratamento circular
-        for(int i = 0; i < q->qty; ++i) // left shift
-            q->queue[i] = q->queue[i + 1];
+// 0(1)
+void enqueue(queue_t *q, int v){
+    q->queue[q->rear] = v;
 
-        q->qty--;
-    }
+    int next = (q->rear + 1) % QUEUE_S;
 
-    q->queue[q->qty++] = value;
+    if(next == q->front)q->front = (q->front + 1) % QUEUE_S;
 
-    return INT_MAX;
+    q->rear = next;
 }
 
-int pop(queue_t *q){
-    if(q->qty == 0)return INT_MIN;
-
-    int value = q->queue[0];
-
-    for(int i = 0; i < q->qty; ++i) // left shift
-        q->queue[i] = q->queue[i + 1];
-
-    q->qty--;
-
-    return value;
-}
-
+// 0(1)
 bool isempty(queue_t q){
-    return q.qty > 0 ? false : true;
+    return q.front == q.rear;
+}
+
+// 0(1)
+int dequeue(queue_t *q){
+    if(isempty(*q))return INT_MIN;
+
+    int v = q->queue[q->front];
+
+    q->front = (q->front + 1) % QUEUE_S;
+
+    return v;
 }
 
 void printqueue(queue_t q){
-    if(q.qty == 0){
+    if(isempty(q)){
         printf("A fila está vazia.\n");
 
         return;
     }
 
     printf("É a fila: ");
-    for(int i = 0; i < q.qty; ++i)
+    int i = q.front;
+    while (i != q.rear) {
         printf("%d ", q.queue[i]);
+        i = (i + 1) % QUEUE_S;
+    }
+
     printf("\n");
 }
 
 int main(){
     queue_t queue;
-    queue.qty = 0;
+    queue.front = 0;
+    queue.rear = 0;
     int op;
     int value;
 
@@ -72,15 +75,14 @@ int main(){
                 printf("Insira o elemento: ");
                 scanf("%d", &value);
 
-                if(push(&queue, value) == INT_MAX)
-                    printf("Elemento inserido.\n");
-                else
-                    printf("A fila está cheia.\n");
+                enqueue(&queue, value);
+
+                printf("Elemento inserido.\n");
 
                 break;
 
             case 2:
-                value = pop(&queue);
+                value = dequeue(&queue);
 
                 if(value > INT_MIN)
                     printf("É o elemento na frente da fila: %d\n", value);
